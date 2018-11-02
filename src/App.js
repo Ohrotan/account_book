@@ -76,8 +76,8 @@ class App extends Component {
 
 
   handleRegister = (id) => {
-    const carInfo = this.state.receiptList.find(x => x.get('id') == id);
-    this.editData = carInfo;
+    const info = this.state.receiptList.find(x => x.get('id') == id);
+    this.editData = info;
     this.setState({ formOpen: true });
   }
 
