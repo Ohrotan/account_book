@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Header, Button, Form, Icon, Modal } from 'semantic-ui-react'
 
-import './CarForm.css';
+import './ReceiptForm.css';
 
 
 
-class CarForm extends Component {
+class ReceiptForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,7 +61,6 @@ class CarForm extends Component {
                 <Modal open={this.props.formOpen} onMount={this.setData}>
                     <Modal.Header>
                         <Header>
-                            <Icon name='car' />
                             차량 정보
                         </Header>
                     </Modal.Header>
@@ -86,7 +85,7 @@ class CarForm extends Component {
                                 </Form.Field>
                                 <Form.Field>
                                     <label>이름</label>
-                                    <input type="text" name="name" id="Car_input" placeholder="이름"
+                                    <input type="text" name="name" id="receipt_input" placeholder="이름"
                                         value={this.state.name} onChange={this.handleChange} />
                                 </Form.Field>
 
@@ -108,5 +107,5 @@ class CarForm extends Component {
 
 }
 
-export default CarForm;
+export default ReceiptForm;
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { List } from 'immutable';
 import { Table, Checkbox, Button, Input, Select, Pagination } from 'semantic-ui-react';
-import './CarInfoList.css';
+import './ReceiptInfoList.css';
 
-class CarInfoList extends Component {
+class ReceiptInfoList extends Component {
 
     constructor(props) {
         super(props);
@@ -51,34 +51,26 @@ class CarInfoList extends Component {
 
     render() {
         const { data } = this.props;
-        const options = [{ key: 'all', text: '전체', value: 'all' },
-        { key: 'id', text: '차량 아이디', value: 'id' },
-        { key: 'model', text: '모델명', value: 'model' },
-        { key: 'storeID', text: '매장 아이디', value: 'storeID' },
-        { key: 'name', text: '이름', value: 'name' },
-        ];
 
         return (
 
-            <div className="car_table">
+            <div className="receipt_table">
                 <Button inverted color="red" onClick={this.handleRemove}>선택 삭제</Button>
-                <Button inverted color="green" onClick={this.props.onRegister}>차량 등록</Button>
-                <div className="search_bar">
-                    <Input type='text' placeholder='검색어를 입력하세요.' action>
-                        <input />
-                        <Select options={options} defaultValue='all' />
-                        <Button type='submit'>검색</Button>
-                    </Input>
-                </div>
+                <Button inverted color="green" onClick={this.props.onRegister}>등록</Button>
+              
                 <Table selectable>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell><Checkbox name="all" value="all" checked={this.state.allChecked}
                                 onChange={this.handleCheck} /></Table.HeaderCell>
-                            <Table.HeaderCell>차량 아이디</Table.HeaderCell>
-                            <Table.HeaderCell>모델명</Table.HeaderCell>
-                            <Table.HeaderCell>매장 아이디</Table.HeaderCell>
-                            <Table.HeaderCell>이름</Table.HeaderCell>
+                            <Table.HeaderCell>번호</Table.HeaderCell>
+                            <Table.HeaderCell>카드</Table.HeaderCell>
+                            <Table.HeaderCell>사용일</Table.HeaderCell>
+                            <Table.HeaderCell>계정과목</Table.HeaderCell>
+                            <Table.HeaderCell>프로젝트</Table.HeaderCell>
+                            <Table.HeaderCell>내용</Table.HeaderCell>
+                            <Table.HeaderCell>금액</Table.HeaderCell>
+                            <Table.HeaderCell>비고</Table.HeaderCell>
                             <Table.HeaderCell></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -88,9 +80,13 @@ class CarInfoList extends Component {
                                 <Table.Cell><Checkbox value={info.get('id')} checked={this.state.checkedIDs.includes(info.get('id'))}
                                     onChange={this.handleCheck} /></Table.Cell>
                                 <Table.Cell>{info.get('id')}</Table.Cell>
-                                <Table.Cell>{info.get('model')}</Table.Cell>
-                                <Table.Cell>{info.get('storeID')}</Table.Cell>
-                                <Table.Cell>{info.get('name')}</Table.Cell>
+                                <Table.Cell>{info.get('cardNumber')}</Table.Cell>
+                                <Table.Cell>{info.get('useDate')}</Table.Cell>
+                                <Table.Cell>{info.get('title')}</Table.Cell>
+                                <Table.Cell>{info.get('project')}</Table.Cell>
+                                <Table.Cell>{info.get('subtitle')}</Table.Cell>
+                                <Table.Cell>{info.get('amount')}</Table.Cell>
+                                <Table.Cell>{info.get('note')}</Table.Cell>
                                 <Table.Cell>
                                     <Button inverted color="yellow" floated="right"
                                         value={info.get('id')} onClick={this.handleEdit}>수정</Button>
@@ -106,4 +102,4 @@ class CarInfoList extends Component {
         );
     }
 }
-export default CarInfoList;
+export default ReceiptInfoList;

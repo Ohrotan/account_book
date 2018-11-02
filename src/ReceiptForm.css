@@ -1,13 +1,13 @@
-#car_form{
+#receipt_form{
     border: 3px solid #aaa;
     border-radius: 20px;
     width: 500px;
     margin: 50px auto;
 }
-#car_form h2{
+#receipt_form h2{
     text-align: center;
 }
-#car_form div{
+#receipt_form div{
     margin:20px;
 }
 

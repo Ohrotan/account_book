@@ -1,0 +1,13 @@
+.rct_form{
+    background-color: #eee;
+    padding:5px;
+}
+
+.rct_form label{
+    padding-left:15px;
+    padding-right:5px;
+}
+#rct_submit{
+    margin: 10px;
+    
+}
