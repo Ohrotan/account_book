@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Map, List } from 'immutable';
-import firebase from "firebase";
 import RForm from './RForm';
-import ReceiptForm from './ReceiptForm';
 import ReceiptInfoList from './ReceiptInfoList';
 import './App.css';
 
 class App extends Component {
 
-  id = 4;
+  id = 1;
 
   editData = {
     id: '',
@@ -67,7 +65,7 @@ class App extends Component {
       alert('선택한 정보가 없습니다.');
     }
     else {
-      const ok = window.confirm('해당 차량 정보를 정말 삭제하시겠습니까?');
+      const ok = window.confirm('해당 정보를 정말 삭제하시겠습니까?');
       if (ok == true) {
         this.setState({ receiptList: this.state.receiptList.filterNot(x => list.includes(x.get('id'))) })
       }
@@ -78,7 +76,7 @@ class App extends Component {
   handleRegister = (id) => {
     const info = this.state.receiptList.find(x => x.get('id') == id);
     this.editData = info;
-    this.setState({ formOpen: true });
+   
   }
 
   handleEdit = (data) => {
