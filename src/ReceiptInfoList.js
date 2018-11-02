@@ -17,12 +17,12 @@ class ReceiptInfoList extends Component {
     handleCheck = (e, { value }) => {
 
         //전체 선택시
-        if (value == 'all') {
+        if (value === 'all') {
             this.setState({ allChecked: !this.state.allChecked });
 
             const { data } = this.props;
 
-            if (this.state.allChecked != true) {
+            if (this.state.allChecked !== true) {
                 let allID = List([]);
                 data.map(info => allID = allID.push(info.get('id')));
                 this.setState({ checkedIDs: allID });

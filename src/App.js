@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { Map, List } from 'immutable';
+import React, {Component} from 'react';
+import {Map, List} from 'immutable';
 import RForm from './RForm';
 import ReceiptInfoList from './ReceiptInfoList';
+import Login from './Login';
+import firebase, {initFirebase, auth} from './firebase';
 import './App.css';
 
 class App extends Component {
 
   id = 1;
-
   editData = {
     id: '',
     cardNumber: '',
@@ -25,7 +26,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-
+      loggedIn: false,
       receiptList: List([
         Map({
           id: 0,
@@ -39,25 +40,24 @@ class App extends Component {
           modiDate: '',
           modifier: ''
         })
-        
       ])
     }
   }
 
   handleCreate = (data) => {
-    const { receiptList } = this.state;
+    const {receiptList} = this.state;
     if (data.id === '') {
       data.id = this.id++;
     }
     const mapData = Map({
       ...data
     });
-    this.setState({ receiptList: receiptList.push(mapData) });
+    this.setState({receiptList: receiptList.push(mapData)});
   };
 
   handleRemoveF = i => () => {
     alert(i);
-    this.setState({ receiptList: this.state.receiptList.delete(i) })
+    this.setState({receiptList: this.state.receiptList.delete(i)})
   };
 
   handleRemove = (list) => {
@@ -65,29 +65,56 @@ class App extends Component {
       alert('선택한 정보가 없습니다.');
     }
     else {
-      if (ok === true) {
-        this.setState({ receiptList: this.state.receiptList.filterNot(x => list.includes(x.get('id'))) })
+      const ok = window.confirm('해당 정보를 삭제하시겠습니까?');
+      if (ok) {
+        this.setState({receiptList: this.state.receiptList.filterNot(x => list.includes(x.get('id')))})
       }
     }
   };
 
-
   handleRegister = (id) => {
     this.editData = this.state.receiptList.find(x => x.get('id') === id);
-    this.setState({ formOpen: true });
+    this.setState({formOpen: true});
   };
 
   handleEdit = (data) => {
     const index = this.state.receiptList.findIndex(info => info.get('id') === data.id);
-    this.setState({ receiptList: this.state.receiptList.update(index, val => Map({ ...data })) })
+    this.setState({receiptList: this.state.receiptList.update(index, val => Map({...data}))})
   };
 
-  render() {
+  handleLogin = () => {
+    this.setState({
+      loggedIn: true,
+    })
+  };
 
+  componentDidMount() {
+    initFirebase();
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          loggedIn: true
+        })
+      }
+    });
+  }
+
+  render() {
     return (
       <div>
-        <RForm editData={this.editData} onCreate={this.handleCreate} onEdit={this.handleEdit}/>
-        <ReceiptInfoList data={this.state.receiptList} onRemove={this.handleRemove} onRegister={this.handleRegister} />
+        {this.state.loggedIn ?
+          (<div>
+            <RForm editData={this.editData} onCreate={this.handleCreate} onEdit={this.handleEdit}/>
+            <ReceiptInfoList data={this.state.receiptList} onRemove={this.handleRemove}
+                             onRegister={this.handleRegister}/>
+          </div>) :
+          (
+            <div>
+              <Login onLogin={this.handleLogin}/>
+            </div>
+          )
+        }
+
       </div>
     );
   }
